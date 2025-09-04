@@ -14,36 +14,34 @@ export default function CustomCursor() {
 
   useEffect(() => {
     if (!mounted) return;
-    const pos = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
 
-    // 🔹 Set initial position of dots to center
-    dotsRef.current.forEach((dot) => {
-      gsap.set(dot, {
-        x: pos.x,
-        y: pos.y,
-      });
+    const pos = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
+    const dots = [...dotsRef.current]; // ✅ snapshot so cleanup is safe
+
+    // set initial positions
+    dots.forEach((dot) => {
+      gsap.set(dot, { x: pos.x, y: pos.y });
     });
 
     const move = (e: MouseEvent) => {
       pos.x = e.clientX;
       pos.y = e.clientY;
 
-      dotsRef.current.forEach((dot, i) => {
+      dots.forEach((dot, i) => {
         gsap.to(dot, {
           x: pos.x,
           y: pos.y,
-          duration: 0.2 + i * 0.1, // trailing delay
+          duration: 0.2 + i * 0.1,
           ease: "power3.out",
         });
       });
     };
 
-
     document.addEventListener("mousemove", move);
 
     return () => {
       document.removeEventListener("mousemove", move);
-      gsap.killTweensOf(dotsRef.current);
+      gsap.killTweensOf(dots); // ✅ cleanup only affects this snapshot
     };
   }, [mounted]);
 
@@ -63,9 +61,9 @@ export default function CustomCursor() {
             }}
             className="absolute rounded-full bg-white/20"
             style={{
-              width: `${15}px`,   // size decreases
-              height: `${15}px`,
-              opacity: `${1 - i * 0.2}`,  // opacity decreases
+              width: "15px",
+              height: "15px",
+              opacity: `${1 - i * 0.2}`,
             }}
           />
         ))}

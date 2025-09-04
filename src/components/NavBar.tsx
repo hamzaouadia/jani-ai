@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { s } from "motion/react-client";
 
 const NavBar = () => {
     const [isOpen, setIsOpen] = useState(false);

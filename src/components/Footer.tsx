@@ -1,7 +1,5 @@
 import React from 'react';
 
-import { Home } from 'lucide-react';
-
 const Footer = () => {
     return (
         <footer className='sticky bottom-0 z-0 w-full h-[500px] bg-[#000000] overflow-hidden'>
