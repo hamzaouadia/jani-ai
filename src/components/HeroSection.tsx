@@ -1,7 +1,7 @@
 import { RefObject } from "react";
 
 interface HeroSectionProps {
-  scrollRef1: RefObject<HTMLDivElement>;
+  scrollRef1: RefObject<HTMLDivElement | null>;
 }
 
 const HeroSection = ({ scrollRef1 }: HeroSectionProps) => {
