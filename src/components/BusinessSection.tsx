@@ -20,8 +20,8 @@ const BusinessSection = () => {
                         </p>
                     </div>
                     <div className="w-full flex justify-center space-x-4 mt-6">
-                        <NeumorphicEffect className="flex items-center justify-center rounded-full bg-white">
-                            <button className="cursor-pointer px-12 rounded-full bg-[#1b4332] transform duration-300 py-2">
+                        <NeumorphicEffect  pressEffect={true} className="flex items-center justify-center rounded-full bg-[#1b4332]">
+                            <button className="cursor-pointer px-12 transform duration-300 py-2">
                                 Register
                             </button>
                         </NeumorphicEffect>

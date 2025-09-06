@@ -167,7 +167,7 @@ const NavBar = () => {
                         </div>
                     </NeumorphicEffect>
 
-                    <NeumorphicEffect className="rounded-full p-4">
+                    <NeumorphicEffect className="rounded-full p-4" pressEffect={true}>
                         <div className="p-2">
                             <button className="flex flex-col items-center justify-around gap-2 ">
                                 <div className="w-[25px] h-[2px] bg-white rounded-full"></div>

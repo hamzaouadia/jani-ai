@@ -24,12 +24,12 @@ const HeroSection = ({ scrollRef1 }: HeroSectionProps) => {
             Give your clients more observability and traceability to increase trust and transparency.
           </p>
           <div className="flex space-x-4 mt-6 px-4 text-lg font-semibold">
-            <NeumorphicEffect className="rounded-full" >
+            <NeumorphicEffect className="rounded-full" pressEffect={true}>
               <button className="cursor-pointer whitespace-nowrap lg:px-12 px-4 py-2 transition duration-300 ">
                 Start Your JANI
               </button>
             </NeumorphicEffect>
-            <NeumorphicEffect className="rounded-full" >
+            <NeumorphicEffect className="rounded-full" pressEffect={true}>
               <button className="cursor-pointer whitespace-nowrap lg:px-12 px-4 py-2 transition duration-300 ">
                 Contact Sales
               </button>
