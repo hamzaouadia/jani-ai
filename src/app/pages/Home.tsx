@@ -1,53 +1,82 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 
 import HeroSection from "@/components/HeroSection";
 import SupplyChainSection from "@/components/SupplyChainSection";
 import BusinessSection from "@/components/BusinessSection";
 
+const sections = [
+  "HeroSection",
+  "SupplyChainSection",
+  "BusinessSection",
+];
 
 const Home = () => {
-  const [isMobile, setIsMobile] = useState(false);
-  const scrollRef1 = useRef<HTMLDivElement>(null);
-  const scrollRef2 = useRef<HTMLDivElement>(null);
-
-  const { scrollYProgress: scrollYProgress1 } = useScroll({
-    target: scrollRef1,
-    offset: ["1 1", "1 0"],
-  });
-
-  const { scrollYProgress: scrollYProgress2 } = useScroll({
-    target: scrollRef2,
-    offset: ["1 1", "1 0"],
-  });
-
-  const rightOne = useTransform(scrollYProgress1, [0, 1], ["25%", "50%"]);
-  const rightTwo = useTransform(scrollYProgress2, [0, 1], ["0%", "25%"]);
-  const top1 = useTransform(scrollYProgress1, [0, 1], ["45%", "55%"]);
-  const top2 = useTransform(scrollYProgress2, [0, 1], ["0%", "-5%"]);
-  const topCombined = useTransform([top1, top2], ([t1, t2]) => `calc(${t1} + ${t2})`);
-  const rightCombined = useTransform([rightOne, rightTwo], ([r1, r2]) => `calc(${r1} + ${r2})`);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const scrollRef1 = useRef<HTMLDivElement | null>(null);
+  const [sectionIndex, setSectionIndex] = useState(0);
 
   useEffect(() => {
-    const handleResize = () => setIsMobile(window.innerWidth <= 1000);
-    handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+    const container = containerRef.current;
+    if (!container) return;
+
+    let isThrottled = false;
+
+    const handleWheel = (e: WheelEvent) => {
+      if (isThrottled) return;
+      isThrottled = true;
+
+      if (e.deltaY > 0) {
+        setSectionIndex((prev) => (prev + 1) % sections.length);
+      } else {
+        setSectionIndex((prev) =>
+          (prev - 1 + sections.length) % sections.length
+        );
+      }
+
+      setTimeout(() => {
+        isThrottled = false;
+      }, 800);
+    };
+
+    container.addEventListener("wheel", handleWheel, { passive: true });
+    return () => container.removeEventListener("wheel", handleWheel);
   }, []);
 
+  let SectionComponent;
+  switch (sections[sectionIndex]) {
+    case "HeroSection":
+      SectionComponent = <HeroSection scrollRef1={scrollRef1} />;
+      break;
+    case "SupplyChainSection":
+      SectionComponent = <SupplyChainSection />;
+      break;
+    case "BusinessSection":
+      SectionComponent = <BusinessSection />;
+      break;
+    default:
+      SectionComponent = null;
+  }
+
   return (
-    <div className="relative w-full h-full overflow-hidden z-10">
-      {!isMobile && (
+    <div
+      ref={containerRef}
+      className="relative w-full h-screen overflow-hidden bg-[#1b4332]"
+    >
+      <AnimatePresence mode="wait">
         <motion.div
-          style={{ right: rightCombined, top: topCombined }}
-          className="fixed z-10 top-[55%] -translate-y-[40%] translate-x-[50%] h-[60vh] w-[30vw] bg-gray-300"
-        />
-      )}
-      <HeroSection scrollRef1={scrollRef1} />
-      <SupplyChainSection innerRef={scrollRef2} />
-      <BusinessSection />
+          key={sectionIndex}
+          className="absolute w-full h-full"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.7, ease: "easeInOut" }}
+        >
+          {SectionComponent}
+        </motion.div>
+      </AnimatePresence>
     </div>
   );
 };

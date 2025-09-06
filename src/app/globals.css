@@ -30,7 +30,18 @@ video {
   animation: slow-motion linear infinite;
 }
 
-.shadow-custom {
-    --tw-shadow: 0px 10px 20px 30px var(--tw-shadow-color, rgba(255, 255, 255, 0));
-    box-shadow:  var(--tw-shadow);
+.neumorphic-button {
+  background-color: #1b4332;
+  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0),
+              -4px -4px 15px rgba(216, 243, 220, 0);
+  transition: box-shadow 1s ease-in-out;
+}
+
+.neumorphic-button.in-view {
+  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.5),
+              -4px -4px 15px rgba(216, 243, 220, 0.3);
+}
+
+.scroll-smooth {
+  scroll-behavior: smooth;
 }

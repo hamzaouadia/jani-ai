@@ -3,16 +3,18 @@ import Home from "./pages/Home";
 import CustomCursor from '@/components/CustomCursor';
 import Footer from "@/components/Footer";
 
+import Chatbot from "@/components/Chatbot";
 
 import "./globals.css";
 
 export default function Page() {
   return (
-    <div className="relative">
+    <div className="relative scroll-smooth">
       <CustomCursor />
       <NavBar />
       <Home />
-      <Footer />
+      {/* <Footer /> */}
+      {/* <Chatbot /> */}
     </div>
   );
 }

@@ -1,9 +1,10 @@
 "use client"
+import NeumorphicEffect from "./NeumorphicEffect";
 
 const BusinessSection = () => {
     return (
-        <section className="relative flex flex-col items-center justify-center p-4 h-screen bg-white">
-            <div className="w-full h-full text-black text-center flex flex-row justify-end">
+        <section className="snap-start relative flex flex-col items-center justify-center p-4 h-screen text-[#effdf1] bg-[#1b4332]">
+            <div className="w-full h-full text-center flex flex-row justify-end">
                 <div className="lg:w-1/2 h-full flex flex-col justify-center items-center lg:p-20 p-4 space-y-8">
                     <div className="space-y-4 flex justify-center items-center">
                         <p className="lg:text-6xl text-4xl font-semibold">
@@ -19,11 +20,11 @@ const BusinessSection = () => {
                         </p>
                     </div>
                     <div className="w-full flex justify-center space-x-4 mt-6">
-                        <div className="flex items-center justify-center bg-green-800">
-                            <button className="cursor-pointer px-12 border-2 bg-white -translate-y-1.5 scale-105 hover:scale-100 hover:translate-0 hover:bg-green-800 hover:text-white transform duration-300 border-black py-2">
+                        <NeumorphicEffect className="flex items-center justify-center rounded-full bg-white">
+                            <button className="cursor-pointer px-12 rounded-full bg-[#1b4332] transform duration-300 py-2">
                                 Register
                             </button>
-                        </div>
+                        </NeumorphicEffect>
                     </div>
                 </div>
             </div>
