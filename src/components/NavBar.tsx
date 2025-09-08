@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 
 // const NavBar = () => {
 //     const [isOpen, setIsOpen] = useState(false);
@@ -131,18 +131,20 @@ import NeumorphicEffect from "./NeumorphicEffect";
 
 
 const NavBar = () => {
+    const [isOpen, setIsOpen] = useState(false);
     
     return (
-        <div className="fixed top-0 w-full h-70 flex p-4 px-8 pt-6 text-[#ffffff] z-9999">
-            <div className="relative w-full">
+        <>
+        <div className="fixed top-0 w-full h-70 flex p-4 px-8 pt-6 text-[#ffffff] z-300">
+            <div className="w-full">
                 <nav className="flex flex-row items-center justify-between w-full z-100">
-                    <NeumorphicEffect className="px-4 rounded-full">
+                    <NeumorphicEffect className="px-4 rounded-full flex flex-row items-center justify-center h-full ">
                         <div className="flex items-center p-4">
                             <h1 className="text-xl whitespace-nowrap">JANI-AI</h1>
                         </div>
                     </NeumorphicEffect>
 
-                    <NeumorphicEffect className="rounded-full px-4">
+                    <NeumorphicEffect className="rounded-full px-4 flex flex-row items-center justify-center h-full ">
                         <div className="flex flex-row justify-center items-center px-8 space-x-8 text-lg h-full">
                             <div className="flex items-center p-4">
                                 <a href="#" title="About">
@@ -167,18 +169,64 @@ const NavBar = () => {
                         </div>
                     </NeumorphicEffect>
 
-                    <NeumorphicEffect className="rounded-full p-4" pressEffect={true}>
-                        <div className="p-2">
-                            <button className="flex flex-col items-center justify-around gap-2 ">
-                                <div className="w-[25px] h-[2px] bg-white rounded-full"></div>
-                                <div className="w-[25px] h-[2px] bg-white rounded-full"></div>
-                            </button>
-                        </div>
-                    </NeumorphicEffect>
+                    <button
+                        className="flex items-center justify-center z-100 rounded-full h-[60px] w-[60px]"
+                        onClick={() => setIsOpen(!isOpen)}
+                    >
+                        <NeumorphicEffect
+                            className="rounded-full flex flex-col items-center justify-center w-full h-full"
+                            pressEffect={true}
+                            >
+                            {/* Top line */}
+                            <div className="h-full w-full flex flex-col items-center gap-2">
+                                <motion.div
+                                    initial={false}
+                                    animate={isOpen ? { rotate: 45, y: 5 } : { rotate: 0, y: 0 }}
+                                    transition={{ duration: 0.3 }}
+                                    className="w-[30px] h-[2px] bg-white rounded-full"
+                                />
+
+                                {/* Bottom line */}
+                                <motion.div
+                                    initial={false}
+                                    animate={isOpen ? { rotate: -45, y: -5 } : { rotate: 0, y: 0 }}
+                                    transition={{ duration: 0.3 }}
+                                    className="w-[30px] h-[2px] bg-white rounded-full"
+                                />
+                            </div>
+                        </NeumorphicEffect>
+                    </button>
+
+                    {/* Mobile Menu */}
+                    <AnimatePresence>
+                        {isOpen && (
+                        <motion.div
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            transition={{ duration: 0.3 }}
+                            className="absolute bg-black/10 text-white top-0 right-0 w-full h-screen backdrop-blur-md flex flex-col items-center justify-center space-y-8 transition duration-300 z-50"
+                        >
+                            <a href="#" className="text-2xl">
+                                About
+                            </a>
+                            <a href="#" className="text-2xl">
+                                Blog
+                            </a>
+                            <a href="#" className="text-2xl">
+                                Pricing
+                            </a>
+                            <a href="#" className="text-2xl">
+                                Features
+                            </a>
+                        </motion.div>
+                        )}
+                    </AnimatePresence>
 
                 </nav>
             </div>
         </div>
+        </>
         )
 };
 

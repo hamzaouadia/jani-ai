@@ -1,5 +1,12 @@
 import { Workflow, Wrench, Database, Github } from "lucide-react";
+import { motion } from "framer-motion";
+
 import NeumorphicEffect from "./NeumorphicEffect";
+
+const textItem = {
+  hidden: { opacity: 0 },
+  show: { opacity: 1, transition: { delay: 0.8, duration: 0.5 } },
+};
 
 export default function SupplyChainSection({ innerRef }: { innerRef?: React.RefObject<HTMLDivElement | null> }) {
   const features = [
@@ -31,17 +38,29 @@ export default function SupplyChainSection({ innerRef }: { innerRef?: React.RefO
   return (
         <section ref={innerRef} className="snap-start relative flex flex-col items-center justify-center p-4 lg:h-screen h-full text-[#effdf1] bg-[#1b4332]">
             <div className='w-full h-full flex flex-col justify-end p-2 '>
-                <div className='w-full h-60 flex flex-col justify-center items-center text-center'>
+                 <motion.div
+                    variants={textItem}
+                    initial="hidden"
+                    animate="show"
+                    exit="hidden"
+                    className='w-full h-60 flex flex-col justify-center items-center text-center'
+                >
                     <p className='lg:text-6xl text-4xl font-bold px-4 pt-8'>Giving observability from farm to fork.</p>
                     <p className="mt-6 text-base lg:text-xl mx-auto max-w-3xl">
                         Map out your supply chain and see where you can optimize, provide your clients with transparency and traceability of your resources.
                     </p>
-                </div>
+                </motion.div>
                 <div className='w-full lg:h-160 flex lg:flex-row flex-col justify-between'>
                     <div className='lg:w-160 h-full p-5'>
                         {/* Left: Illustration/Map placeholder (swap with your component/image) */}
                         <NeumorphicEffect className="relative rounded-2xl lg:p-6 p-4 flex items-center justify-center min-h-[320px] h-full">
-                            <div className="text-center">
+                             <motion.div
+                                variants={textItem}
+                                initial="hidden"
+                                animate="show"
+                                exit="hidden"
+                                className="text-center"
+                            >
                                 <div className="text-sm uppercase tracking-wide font-semibold">Supply Chain Map</div>
                                     <p className="mt-2">
                                         Drop in your map, flow diagram, or live metrics component here to visualize every step from farm to fork.
@@ -55,7 +74,7 @@ export default function SupplyChainSection({ innerRef }: { innerRef?: React.RefO
                                         <input type="file" id="file" className="hidden" />
                                     </div>
                                 </div>
-                            </div>
+                            </motion.div>
                         </NeumorphicEffect>
                     </div>
                     <div className='lg:w-160 h-full flex flex-col justify-between space-y-6 p-5'>
@@ -64,7 +83,12 @@ export default function SupplyChainSection({ innerRef }: { innerRef?: React.RefO
                                 key={title}
                                 className="rounded-2xl flex items-center bg-[#d8f3dc]/15 shadow-sm p-5"
                             >
-                                <div className="flex items-center justify-center gap-3 ">
+                                <motion.div
+                                    variants={textItem}
+                                    initial="hidden"
+                                    animate="show"
+                                    exit="hidden" 
+                                    className="flex items-center justify-center gap-3 ">
                                     <div className="rounded-xl border border-[#b7e4c7] p-2">
                                         <Icon className="h-6 w-6 text-[#b7e4c7]" aria-hidden="true" />
                                     </div>
@@ -72,7 +96,7 @@ export default function SupplyChainSection({ innerRef }: { innerRef?: React.RefO
                                         <h3 className="text-lg font-semibold">{title}</h3>
                                         <p className="mt-2 text-sm">{desc}</p>
                                     </div>
-                                </div>
+                                </motion.div>
                             </NeumorphicEffect>
                         ))}
                     </div>

@@ -1,21 +1,22 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence } from "framer-motion";
 
 import HeroSection from "@/components/HeroSection";
 import SupplyChainSection from "@/components/SupplyChainSection";
 import BusinessSection from "@/components/BusinessSection";
+import SupplyChainCarousel from "@/components/SupplyChainCarousel";
 
 const sections = [
   "HeroSection",
   "SupplyChainSection",
   "BusinessSection",
+  "SupplyChainCarousel",
 ];
 
 const Home = () => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const scrollRef1 = useRef<HTMLDivElement | null>(null);
   const [sectionIndex, setSectionIndex] = useState(0);
 
   useEffect(() => {
@@ -48,13 +49,16 @@ const Home = () => {
   let SectionComponent;
   switch (sections[sectionIndex]) {
     case "HeroSection":
-      SectionComponent = <HeroSection scrollRef1={scrollRef1} />;
+      SectionComponent = <HeroSection />;
       break;
     case "SupplyChainSection":
       SectionComponent = <SupplyChainSection />;
       break;
     case "BusinessSection":
       SectionComponent = <BusinessSection />;
+      break;
+    case "SupplyChainCarousel":
+      SectionComponent = <SupplyChainCarousel />;
       break;
     default:
       SectionComponent = null;
@@ -66,16 +70,12 @@ const Home = () => {
       className="relative w-full h-screen overflow-hidden bg-[#1b4332]"
     >
       <AnimatePresence mode="wait">
-        <motion.div
+        <div
           key={sectionIndex}
           className="absolute w-full h-full"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.7, ease: "easeInOut" }}
         >
           {SectionComponent}
-        </motion.div>
+        </div>
       </AnimatePresence>
     </div>
   );

@@ -9,7 +9,7 @@ import "./globals.css";
 
 export default function Page() {
   return (
-    <div className="relative scroll-smooth">
+    <div className="relative overflow-hidden">
       <CustomCursor />
       <NavBar />
       <Home />
