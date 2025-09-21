@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import Button from "./Button";
+// import Button from "./Button";
 
 const NavBar = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -38,7 +38,7 @@ const NavBar = () => {
                         transition={{ duration: 0.5 }}
                         className="rounded-full border-2 border-[#77af9c] flex-row items-center justify-center h-full hidden lg:flex">
                         <div className="flex flex-row justify-center items-center  text-lg h-full">
-                            {menuItems.map((item, index) => (
+                            {menuItems.map((item) => (
                                 <button
                                     onClick={() => setActive(item)}
                                     key={item}

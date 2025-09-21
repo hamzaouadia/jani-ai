@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { AnimatePresence } from "framer-motion";
+// import { useEffect, useRef, useState } from "react";
+// import { AnimatePresence } from "framer-motion";
 
 import HeroSection from "@/components/HeroSection";
 import SupplyChainSection from "@/components/SupplyChainSection";
@@ -9,13 +9,13 @@ import BusinessSection from "@/components/BusinessSection";
 import SupplyChainCarousel from "@/components/SupplyChainCarousel";
 import TeamSection from "@/components/TeamSection";
 
-const sections = [
-  "SupplyChainCarousel",
-  "HeroSection",
-  "SupplyChainSection",
-  "BusinessSection",
-  "TeamSection",
-];
+// const sections = [
+//   "SupplyChainCarousel",
+//   "HeroSection",
+//   "SupplyChainSection",
+//   "BusinessSection",
+//   "TeamSection",
+// ];
 
 const Home = () => {
   // const containerRef = useRef<HTMLDivElement>(null);

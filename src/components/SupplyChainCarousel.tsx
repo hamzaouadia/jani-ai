@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
-import { CircleDot } from "lucide-react";
+// import { CircleDot } from "lucide-react";
 import { fluidFont } from "../utils/fontSize";
 
 
