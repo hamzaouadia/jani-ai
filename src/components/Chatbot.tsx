@@ -1,94 +1,108 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Send, MessageCircle } from "lucide-react";
+import { Send, MessageCircle, X } from "lucide-react";
 
 export default function Chatbot() {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState([
-    { sender: "bot", text: "Hello 👋 How can I help you today?" },
+    { role: "bot", text: "Hi 👋 I'm JANI-AI. How can I help you today?" },
   ]);
   const [input, setInput] = useState("");
+  const chatEndRef = useRef<HTMLDivElement>(null);
+
+  // Auto scroll to bottom
+  useEffect(() => {
+    chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
 
   const handleSend = () => {
     if (!input.trim()) return;
 
-    const newMessage = { sender: "user", text: input };
-    setMessages((prev) => [...prev, newMessage]);
+    setMessages((prev) => [...prev, { role: "user", text: input }]);
 
-    // Fake bot reply after delay
+    // Fake bot response (replace with real API call)
     setTimeout(() => {
       setMessages((prev) => [
         ...prev,
-        { sender: "bot", text: "Got it! I’ll process your request 👍" },
+        { role: "bot", text: `You said: "${input}"` },
       ]);
-    }, 1000);
+    }, 600);
 
     setInput("");
   };
 
   return (
-    <div className="fixed bottom-4 right-4 z-50">
-      {/* Toggle Button */}
-      <button
-        onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center justify-center w-12 h-12 rounded-full bg-blue-600 text-white shadow-lg hover:bg-blue-700"
-      >
-        <MessageCircle size={24} />
-      </button>
+    <>
+      {/* Floating Chat Button */}
+      {!isOpen && (
+        <button
+          onClick={() => setIsOpen(true)}
+          className="fixed bottom-6 right-6 p-4 rounded-full bg-white border border-[#77af9c] shadow-lg transition-all z-200"
+        >
+          <MessageCircle className="text-[#77af9c] w-6 h-6" />
+        </button>
+      )}
 
       {/* Chat Window */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 20 }}
+            exit={{ opacity: 0, y: 50 }}
             transition={{ duration: 0.3 }}
-            className="absolute bottom-16 right-0 w-80 h-96 bg-white shadow-2xl rounded-2xl flex flex-col overflow-hidden"
+            className="fixed bottom-10 right-6 w-[350px] max-w-[90vw] h-[500px] flex flex-col rounded-2xl shadow-2xl border border-[#77af9c] bg-white overflow-hidden z-200"
           >
             {/* Header */}
-            <div className="bg-blue-600 text-white p-3 font-semibold">
-              JANI-AI Chatbot
+            <div className="flex justify-between items-center bg-[#77af9c] text-white p-4">
+              <h2 className="text-lg font-semibold">JANI-AI</h2>
+              <button onClick={() => setIsOpen(false)}>
+                <X className="w-5 h-5" />
+              </button>
             </div>
 
             {/* Messages */}
-            <div className="flex-1 p-3 overflow-y-auto space-y-2 text-sm">
-              {messages.map((msg, idx) => (
-                <div
-                  key={idx}
-                  className={`p-2 rounded-lg max-w-[75%] ${
-                    msg.sender === "user"
-                      ? "ml-auto bg-blue-100"
-                      : "mr-auto bg-gray-100"
+            <div className="flex-1 p-4 overflow-y-auto space-y-3 bg-green-50">
+              {messages.map((msg, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.2 }}
+                  className={`max-w-[80%] p-3 rounded-2xl shadow-sm ${
+                    msg.role === "bot"
+                      ? "bg-[#a1e9d1] text-green-900 self-start"
+                      : "bg-[#77af9c] text-white self-end"
                   }`}
                 >
                   {msg.text}
-                </div>
+                </motion.div>
               ))}
+              <div ref={chatEndRef} />
             </div>
 
             {/* Input */}
-            <div className="flex items-center border-t p-2">
+            <div className="p-3 border-t border-[#77af9c] bg-white flex items-center gap-2">
               <input
                 type="text"
+                className="flex-1 px-4 py-2 rounded-full border border-[#77af9c] focus:outline-none focus:ring-2 focus:ring-[#77af9c]"
+                placeholder="Type your message..."
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={(e) => e.key === "Enter" && handleSend()}
-                placeholder="Type a message..."
-                className="flex-1 px-3 py-2 rounded-lg border outline-none text-sm"
               />
               <button
                 onClick={handleSend}
-                className="ml-2 p-2 bg-blue-600 rounded-full text-white hover:bg-blue-700"
+                className="p-2 rounded-full bg-[#77af9c] hover:bg-[#77af9c] transition-colors"
               >
-                <Send size={16} />
+                <Send className="text-white w-5 h-5" />
               </button>
             </div>
           </motion.div>
         )}
       </AnimatePresence>
-    </div>
+    </>
   );
 }

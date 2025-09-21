@@ -31,7 +31,7 @@ video {
 }
 
 .neumorphic-button {
-  background-color: #1b4332;
+  background-color: #d8f3dc;
   box-shadow: 5px 5px 15px rgba(0, 0, 0, 0),
               -4px -4px 15px rgba(216, 243, 220, 0);
   transition: box-shadow 1s ease-in-out;
@@ -44,4 +44,14 @@ video {
 
 .scroll-smooth {
   scroll-behavior: smooth;
+}
+
+.custom-font {
+  font-size: clamp(var(--min, 1rem), var(--preferred, 2vw), var(--max, 3rem));
+  line-height: 1.1;
+}
+
+
+p, h1, h2, h3, h4, h5, h6 {
+  cursor: default;
 }

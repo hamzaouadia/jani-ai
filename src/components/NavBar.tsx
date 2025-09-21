@@ -2,232 +2,125 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-
-// const NavBar = () => {
-//     const [isOpen, setIsOpen] = useState(false);
-//     const [scrollDirection, setScrollDirection] = useState("up"); // "up" or "down"
-//     const [lastScrollY, setLastScrollY] = useState(0);
-
-//     useEffect(() => {
-//         const handleResize = () => {
-//             if (window.innerWidth > 1536) {
-//                 setIsOpen(false);
-//             }
-//         };
-
-//         const handleScroll = () => {
-//             const currentY = window.scrollY;
-
-//             if (currentY > lastScrollY) {
-//                 setScrollDirection("down");
-//                 setIsOpen(false); // close menu when scrolling down
-//             } else if (currentY < lastScrollY) {
-//                 setScrollDirection("up");
-//             }
-//             setLastScrollY(currentY);
-
-//         };
-
-//         handleResize();
-//         window.addEventListener("resize", handleResize);
-//         window.addEventListener("scroll", handleScroll);
-
-//         return () => {
-//             window.removeEventListener("resize", handleResize);
-//             window.removeEventListener("scroll", handleScroll);
-//         };
-//     }, [lastScrollY]);
-
-//     const toggleMenu = () => setIsOpen(!isOpen);
-
-//     return (
-//         <div className="fixed top-0 w-full flex items-center justify-between p-4 pt-6 text-black z-9999">
-//             <motion.div
-//                 initial={{ backgroundColor: "#016630" }}
-//                 animate={
-//                     scrollDirection === "down"
-//                         ? { backgroundColor: "none" } // hide navbar when scrolling down
-//                         : { backgroundColor: "#016630" }   // show navbar when scrolling up
-//                 }
-//                 transition={{ type: "spring", stiffness: 200, damping: 25, delay: 0 }} // start immediately
-//                 className="relative w-full"
-//             >
-//                 <motion.nav
-//                     initial={{ y: 0, x: 0, opacity: 1 }}
-//                     animate={
-//                         scrollDirection === "down"
-//                             ? { y: 0, x: 0, opacity: 0 } // hide navbar when scrolling down
-//                             : { y: -4, x: 4, opacity: 1 }   // show navbar when scrolling up
-//                     }
-//                     transition={{
-//                         y: { type: "spring", stiffness: 200, damping: 25, delay: 0 }, // no delay
-//                         x: { type: "spring", stiffness: 200, damping: 25, delay: 0 }, // no delay
-//                         opacity: { duration: 0.5, delay: 0 }, // opacity happens later
-//                     }}
-//                     className="flex items-center bg-white justify-between w-full h-20 p-4 px-8 border z-100 shadow-md"
-//                 >
-//                     <div className="flex items-center space-x-4 w-1/4">
-//                         <h1 className="text-2xl font-bold whitespace-nowrap">JANI-AI</h1>
-//                     </div>
-
-//                     {/* Desktop links */}
-//                     <div className="hidden 2xl:flex justify-center space-x-20 text-lg font-semibold w-2/4 text-black">
-//                         <a href="#">About</a>
-//                         <a href="#">Blog</a>
-//                         <a href="#">Pricing</a>
-//                         <a href="#">Features</a>
-//                     </div>
-
-//                     {/* Desktop buttons */}
-//                     <div className="hidden 2xl:flex space-x-8 text-lg font-semibold w-1/4 justify-end text-black">
-//                         <div className="flex items-center justify-center bg-green-800">
-//                             <button className="cursor-pointer px-12 border-2 bg-white -translate-y-[4px] translate-x-[4px] hover:translate-0 transform duration-300 border-black py-2">
-//                                 Register
-//                             </button>
-//                         </div>
-//                         <button className="cursor-pointer whitespace-nowrap px-12 border-2 border-black py-2 bg-green-800 hover:bg-white hover:text-black text-white transition duration-300">
-//                             Sign In
-//                         </button>
-//                     </div>
-
-//                     {/* Mobile menu button */}
-//                     <div className="flex 2xl:hidden justify-center w-10">
-//                         <button onClick={toggleMenu} className="flex flex-col gap-2">
-//                             <div className="h-[2px] w-8 bg-black"></div>
-//                             <div className="h-[2px] w-8 bg-black"></div>
-//                         </button>
-//                     </div>
-//                 </motion.nav>
-
-//                 {/* Mobile dropdown */}
-//                 {isOpen && (
-//                     <div className="absolute top-20 left-0 w-full bg-green-800 p-4 shadow-lg z-50">
-//                         <div className="flex flex-col justify-center items-center space-y-4 text-lg font-semibold">
-//                             <div className="flex flex-col items-start space-y-2 w-full text-white">
-//                                 <div className="w-full flex justify-between p-4"><a href="#" className="text-2xl">About</a></div>
-//                                 <div className="w-full flex justify-between p-4"><a href="#" className="text-2xl">Blog</a></div>
-//                                 <div className="w-full flex justify-between p-4"><a href="#" className="text-2xl">Pricing</a></div>
-//                                 <div className="w-full flex justify-between p-4"><a href="#" className="text-2xl">Features</a></div>
-//                             </div>
-//                             <div className="flex space-x-8 text-lg font-semibold justify-end text-black">
-//                                 <button className="cursor-pointer px-12 border-2 bg-white text-black transform duration-300 border-black py-2">
-//                                     Register
-//                                 </button>
-//                                 <button className="cursor-pointer whitespace-nowrap px-12 border-2 border-black py-2 bg-green-800 text-white transition duration-300">
-//                                     Sign In
-//                                 </button>
-//                             </div>
-//                         </div>
-//                     </div>
-//                 )}
-//             </motion.div>
-//         </div>
-//     );
-// };
-
-// import { Info, FileText, CircleDollarSign, Star } from "lucide-react";
-
-import NeumorphicEffect from "./NeumorphicEffect";
-
+import Button from "./Button";
 
 const NavBar = () => {
     const [isOpen, setIsOpen] = useState(false);
-    
+    const [active, setActive] = useState("");
+
+    const menuItems = ["Home", "About", "Blog", "Pricing", "Features"];
+
+    useEffect(() => {
+        setActive("");
+        setTimeout(() => {
+            setActive("Home");
+        }, 500);
+    }, []);
+
     return (
-        <>
-        <div className="fixed top-0 w-full h-70 flex p-4 px-8 pt-6 text-[#ffffff] z-300">
-            <div className="w-full">
-                <nav className="flex flex-row items-center justify-between w-full z-100">
-                    <NeumorphicEffect className="px-4 rounded-full flex flex-row items-center justify-center h-full ">
-                        <div className="flex items-center p-4">
+        <div className="fixed top-0 left-0 w-full flex px-6 lg:px-8 pt-6 text-[#0e2e20] z-300">
+                <nav className="flex flex-row items-center justify-between w-full">
+                    {/* Logo */}
+                    <motion.div
+                        initial={{ opacity: 0, y: -20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.5 }}
+                        className="px-3 rounded-full bg-[#77af9c] flex flex-row items-center justify-center h-full"
+                    >
+                        <div className="flex items-center p-4 text-white font-bold">
                             <h1 className="text-xl whitespace-nowrap">JANI-AI</h1>
                         </div>
-                    </NeumorphicEffect>
+                    </motion.div>
 
-                    <NeumorphicEffect className="rounded-full px-4 flex flex-row items-center justify-center h-full ">
-                        <div className="flex flex-row justify-center items-center px-8 space-x-8 text-lg h-full">
-                            <div className="flex items-center p-4">
-                                <a href="#" title="About">
-                                    <p>About</p>
-                                </a>
-                            </div>
-                            <div className="flex items-center p-4">
-                                <a href="#" title="Blog">
-                                    <p>Blog</p>
-                                </a>
-                            </div>
-                            <div className="flex items-center p-4">
-                                <a href="#" title="Pricing">
-                                    <p>Pricing</p>
-                                </a>
-                            </div>
-                            <div className="flex items-center p-4">
-                                <a href="#" title="Features">
-                                    <p>Features</p>
-                                </a>
+                    <motion.div
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.5 }}
+                        className="rounded-full border-2 border-[#77af9c] flex-row items-center justify-center h-full hidden lg:flex">
+                        <div className="flex flex-row justify-center items-center  text-lg h-full">
+                            {menuItems.map((item, index) => (
+                                <button
+                                    onClick={() => setActive(item)}
+                                    key={item}
+                                    className={`flex items-center justify-center px-8 py-3 m-1 rounded-full cursor-pointer transition duration-300 ${
+                                    active === item
+                                        ? "bg-[#77af9c] text-white shadow-md"
+                                        : "hover:bg-[#77af9c]/20"
+                                    }`}
+                                >
+                                    <a href="#" title={item}>
+                                        <p>{item}</p>
+                                    </a>
+                                </button>
+                            ))}
+                        </div>
+                    </motion.div>
+                    
+                    <motion.button
+                        className={`flex items-center justify-center z-100 rounded-full border-2 h-[60px] w-[60px] lg:hidden
+                            ${isOpen ? "border-white" : "border-[#77af9c]"}`}
+                        onClick={() => {setIsOpen(!isOpen)}}
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.5 }}
+                    >
+                        <div
+                            className="rounded-full flex flex-col items-center justify-center w-full h-full"
+                        >
+                            <div
+                                className="h-full w-full flex flex-col justify-center items-center gap-2">
+                                <motion.div
+                                    initial={false}
+                                    animate={isOpen ? { rotate: 45, y: 5, background: "white" } : { rotate: 0, y: 0 }}
+                                    transition={{ duration: 0.3 }}
+                                    className="w-[25px] h-[2px] bg-black rounded-full"
+                                />
+                                <motion.div
+                                    initial={false}
+                                    animate={isOpen ? { rotate: -45, y: -5, background: "white" } : { rotate: 0, y: 0 }}
+                                    transition={{ duration: 0.3 }}
+                                    className="w-[25px] h-[2px] bg-black rounded-full"
+                                />
                             </div>
                         </div>
-                    </NeumorphicEffect>
+                    </motion.button>
 
-                    <button
-                        className="flex items-center justify-center z-100 rounded-full h-[60px] w-[60px]"
-                        onClick={() => setIsOpen(!isOpen)}
-                    >
-                        <NeumorphicEffect
-                            className="rounded-full flex flex-col items-center justify-center w-full h-full"
-                            pressEffect={true}
-                            >
-                            {/* Top line */}
-                            <div className="h-full w-full flex flex-col items-center gap-2">
-                                <motion.div
-                                    initial={false}
-                                    animate={isOpen ? { rotate: 45, y: 5 } : { rotate: 0, y: 0 }}
-                                    transition={{ duration: 0.3 }}
-                                    className="w-[30px] h-[2px] bg-white rounded-full"
-                                />
-
-                                {/* Bottom line */}
-                                <motion.div
-                                    initial={false}
-                                    animate={isOpen ? { rotate: -45, y: -5 } : { rotate: 0, y: 0 }}
-                                    transition={{ duration: 0.3 }}
-                                    className="w-[30px] h-[2px] bg-white rounded-full"
-                                />
-                            </div>
-                        </NeumorphicEffect>
-                    </button>
-
-                    {/* Mobile Menu */}
                     <AnimatePresence>
                         {isOpen && (
-                        <motion.div
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            exit={{ opacity: 0 }}
-                            transition={{ duration: 0.3 }}
-                            className="absolute bg-black/10 text-white top-0 right-0 w-full h-screen backdrop-blur-md flex flex-col items-center justify-center space-y-8 transition duration-300 z-50"
-                        >
-                            <a href="#" className="text-2xl">
-                                About
-                            </a>
-                            <a href="#" className="text-2xl">
-                                Blog
-                            </a>
-                            <a href="#" className="text-2xl">
-                                Pricing
-                            </a>
-                            <a href="#" className="text-2xl">
-                                Features
-                            </a>
-                        </motion.div>
+                            <motion.div
+                                initial={{ opacity: 0, x: "100%" }}
+                                animate={{ opacity: 1, x: 0 }}
+                                exit={{ opacity: 0, x: "100%" }}
+                                transition={{ duration: 0.4 }}
+                                className="absolute px-8 text-white top-0 right-0 w-full h-screen bg-green-950/80 backdrop-blur flex flex-col items-start justify-center space-y-8 transition duration-300 z-50 md:hidden"
+                            >
+                                {menuItems.map((item, index) => (
+                                    <motion.a
+                                        key={item}
+                                        href="#"
+                                        initial={{ opacity: 0, y: 20 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        exit={{ opacity: 0, y: 20 }}
+                                        transition={{ delay: index * 0.1 }}
+                                        className={`text-2xl cursor-pointer ${
+                                            active === item
+                                                ? ""
+                                                : ""
+                                        }`}
+                                        onClick={() => {
+                                            setActive(item);
+                                            setIsOpen(false);
+                                        }}
+                                    >
+                                        {item}
+                                    </motion.a>
+                                ))}
+                            </motion.div>
                         )}
                     </AnimatePresence>
-
                 </nav>
-            </div>
         </div>
-        </>
-        )
+    );
 };
 
 export default NavBar;

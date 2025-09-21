@@ -27,15 +27,15 @@ export default function NeumorphicEffect({
     <motion.div
       className={`${className} select-none`}
       initial={{
-        backgroundColor: "#1b4332",
+        backgroundColor: "#bg-[#d7fff1]",
         boxShadow:
           "0px 0px 0px rgba(0,0,0,0.4), 0px 0px 0px rgba(216,243,220,0.2)",
       }}
       animate={{
         boxShadow:
           pressEffect && isPressed
-            ? "inset 4px 4px 10px rgba(0,0,0,0.4), inset -2px -2px 10px rgba(216,243,220,0.2)"
-            : "4px 4px 10px rgba(0,0,0,0.4), -2px -2px 10px rgba(216,243,220,0.2)",
+            ? "inset 3px 2px 5px rgba(0,0,0,0.4), inset -2px -2px 5px rgba(216,243,220,0.2)"
+            : "3px 2px 5px rgba(0,0,0,0.4), -2px -2px 5px rgba(216,243,220,0.2)",
       }}
       exit={{ boxShadow: "0px 0px 0px rgba(0,0,0,0.4), 0px 0px 0px rgba(216,243,220,0.2)"}}
       transition={{ duration: 0.8, ease: "easeInOut" }}

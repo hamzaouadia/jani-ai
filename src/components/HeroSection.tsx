@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
-
-import NeumorphicEffect from "./NeumorphicEffect";
+import Button from "./Button";
+import { fluidFont } from "../utils/fontSize";
 
 const textItem = {
   hidden: { opacity: 0 },
@@ -10,37 +10,57 @@ const textItem = {
 const HeroSection = () => {
   return (
     <section
-      className="relative flex flex-col items-center justify-center p-4 lg:px-20 h-screen w-full text-[#effdf1] bg-[#1b4332]"
+      className="relative flex flex-col items-center justify-center p-4 lg:px-20 h-screen w-full text-[#1d2e28]"
     >
       <div className="w-full h-full flex flex-row lg:p-2">
-        <div className="flex flex-col justify-center lg:items-start items-center h-full w-full lg:p-8 space-y-4 overflow-hidden">
+        <div className="flex flex-col justify-center lg:items-start items-center h-full w-full lg:p-8 space-y-2 overflow-hidden">
           <motion.div
             variants={textItem}
             initial="hidden"
             animate="show"
             exit="hidden"
-            className="flex flex-col lg:items-start items-center space-y-2"
+            className="flex flex-col lg:items-start items-center"
           >
-            <p className=" lg:text-4xl font-semibold px-4">Helping Exporters</p>
-            <p className=" lg:text-9xl text-6xl font-bold p-4 lg:text-start lg:w-1/2 text-center">Track Resources</p>
-            <p className=" lg:text-5xl font-semibold px-4">Across The Supply Chain.</p>
-            <p className="font-mono px-4 lg:text-start text-center lg:w-1/2">
+            {/* Responsive font size using clamp() */}
+            <p
+              className=" custom-font font-normal px-4 py-2"
+              style={fluidFont("1.25rem", "2vw", "2.5rem")}
+
+            >
+              Helping Exporters
+            </p>
+
+            <p
+              className=" custom-font font-bold lg:text-start text-center px-4 py-2"
+              style={fluidFont("4rem", "6vw", "8rem")}
+            >
+              Track Resources
+            </p>
+
+            <p
+              className=" custom-font font-light px-4 py-2"
+              style={fluidFont("1.75rem", "3vw", "3.5rem")}
+            >
+              Across The Supply Chain.
+            </p>
+            <p
+              className="custom-font font-light px-4 py-2 lg:text-start text-center"
+              style={fluidFont("0.8rem", "0.8vw", "1.5rem")}
+            >
               JANI AI Tracks your resources from the farm up to the fork. 
               Give your clients more observability and traceability to increase trust and transparency.
             </p>
           </motion.div>
-          <div className="flex space-x-4 mt-6 px-4 text-lg font-semibold">
-            <NeumorphicEffect className="rounded-full flex flex-row items-center justify-center h-full " pressEffect={true}>
-              <button className="cursor-pointer whitespace-nowrap lg:px-12 px-4 py-2 transition duration-300 ">
-                Start Your JANI
-              </button>
-            </NeumorphicEffect>
-            <NeumorphicEffect className="rounded-full flex flex-row items-center justify-center h-full " pressEffect={true}>
-              <button className="cursor-pointer whitespace-nowrap lg:px-12 px-4 py-2 transition duration-300 ">
-                Contact Sales
-              </button>
-            </NeumorphicEffect>
-          </div>
+
+          <motion.div
+            variants={textItem}
+            initial="hidden"
+            animate="show"
+            exit="hidden"
+            className="flex space-x-4 mt-4 px-4 text-lg font-semibold">
+            <Button text="Get Started" border="#77af9c" background="#77af9c" />
+            <Button text="Contact Sales" border="#77af9c" background="#77af9c" />
+          </motion.div>
         </div>
       </div>
     </section>
