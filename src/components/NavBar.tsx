@@ -36,13 +36,13 @@ const NavBar = () => {
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.5 }}
-                        className="rounded-full border-2 border-[#77af9c] flex-row items-center justify-center h-full hidden lg:flex">
-                        <div className="flex flex-row justify-center items-center  text-lg h-full">
+                        className="rounded-full border-2 border-[#77af9c] flex-row items-center p-1 justify-center h-full hidden lg:flex">
+                        <div className="flex flex-row justify-center items-center text-lg h-full p-1 bg-white rounded-full">
                             {menuItems.map((item) => (
                                 <button
                                     onClick={() => setActive(item)}
                                     key={item}
-                                    className={`flex items-center justify-center px-8 py-3 m-1 rounded-full cursor-pointer transition duration-300 ${
+                                    className={`flex items-center justify-center px-8 py-3 rounded-full cursor-pointer transition duration-300 ${
                                     active === item
                                         ? "bg-[#77af9c] text-white shadow-md"
                                         : "hover:bg-[#77af9c]/20"

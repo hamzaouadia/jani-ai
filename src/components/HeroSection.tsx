@@ -1,6 +1,8 @@
-import { motion } from "framer-motion";
 import Button from "./Button";
 import { fluidFont } from "../utils/fontSize";
+import { motion } from "framer-motion";
+
+import ScrollIndicator from "./ScrollIndicator";
 
 const textItem = {
   hidden: { opacity: 0 },
@@ -8,6 +10,7 @@ const textItem = {
 };
 
 const HeroSection = () => {
+  
   return (
     <section
       className="relative flex flex-col items-center justify-center p-4 lg:px-20 h-screen w-full text-[#1d2e28]"
@@ -63,6 +66,7 @@ const HeroSection = () => {
           </motion.div>
         </div>
       </div>
+      <ScrollIndicator />
     </section>
   );
 };
